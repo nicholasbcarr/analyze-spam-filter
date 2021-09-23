@@ -1,13 +1,15 @@
 function analyzeSpamFilter(datas) {
+  let truePos = _.pluck(datas, 'truePositives');
+  let falsePos = _.pluck(datas, 'falsePositives');
+  let trueNeg = _.pluck(datas, 'trueNegatives');
+  let falseNeg = _.pluck(datas, 'falseNegatives');
+  truePos = _.reduce(truePos, function (memo, num) { return memo + num; });
+  falsePos = _.reduce(falsePos, function (memo, num) { return memo + num; });
+  trueNeg = _.reduce(trueNeg, function (memo, num) { return memo + num; });
+  falseNeg = _.reduce(falseNeg, function (memo, num) { return memo + num; });
   const spamNums = {
-    falsePositives: 0, truePositives: 0, trueNegatives: 0, falseNegatives: 0,
+    falsePositives: falsePos, truePositives: truePos, trueNegatives: trueNeg, falseNegatives: falseNeg,
   };
-  for (const data of datas) {
-    spamNums.falsePositives += data.falsePositives;
-    spamNums.falseNegatives += data.falseNegatives;
-    spamNums.truePositives += data.truePositives;
-    spamNums.trueNegatives += data.trueNegatives;
-  }
   return spamNums;
 }
 
